@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adam's Notes</title>
+    <link rel="stylesheet" href="./styles/style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Graduate Physics Notes</h1>
+    </header>
+    
+    <nav>
+        <a href="./index.html">Home</a>
+        <a href="./pages/about.html">About</a>
+    </nav>
+    
+    <div class="container">
+
+        <aside class="sidebar">
+            <h2>Site Overview</h2>
+            <p>
+                <b>Goal:</b> To deepen my understanding by explaining my course's content.
+            </p>
+            <p>
+                Each class is organized by chapters and sections for easy navigation and study. Click on any class card to explore the complete notes for that course.
+            </p>
+        </aside>
+
+        <section class="content">
+            <h2>Choose a Class!</h2>
+            <p>
+                Below you can find a few classes I've taken and their notes, this is an expanding collection.
+            </p>
+
+            <!-- Filter Dropdown -->
+            <section class="filter-section">
+                <label for="filter">Filter by Level:</label>
+                <select id="filter" class="filter-select">
+                    <option value="all">All Classes</option>
+                    <option value="graduate">Graduate Level</option>
+                    <option value="undergraduate">Undergraduate</option>
+                    <option value="elective">Electives</option>
+                </select>
+            </section>
+
+            <section class="card-container">
+                <div class="card" data-topic="graduate">
+                    <a href="./pages/stage.html?class=classical-mechanics">
+                        <div class="card-content">
+                            <h3>Classical Mechanics</h3>
+                            <p>PH 511 at WPI taught by Prof. Zozulya.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="card" data-topic="graduate">
+                    <a href="./pages/stage.html?class=quantum-mechanics">
+                        <div class="card-content">
+                            <h3>Quantum Mechanics I</h3>
+                            <p>PH 514 at WPI taught by Prof. Aravind.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="card" data-topic="graduate">
+                    <a href="./pages/stage.html?class=mathematical-methods">
+                        <div class="card-content">
+                            <h3>Mathematical Methods in Physics</h3>
+                            <p>PH 541 at WPI taught by Prof. Zozulya.</p>
+                        </div>
+                    </a>
+                </div>
+                <!-- <div class="card" data-topic="undergraduate">
+                    <a href="./pages/stage.html?class=electromagnetic-theory">
+                        <div class="card-content">
+                            <h3>Electromagnetic Theory</h3>
+                            <p>PH 412 at WPI. Maxwell's equations, electromagnetic waves, and field theory.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="card" data-topic="undergraduate">
+                    <a href="./pages/stage.html?class=thermodynamics">
+                        <div class="card-content">
+                            <h3>Statistical Mechanics & Thermodynamics</h3>
+                            <p>PH 423 at WPI. Statistical foundations and thermodynamic principles.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="card" data-topic="elective">
+                    <a href="./pages/stage.html?class=general-relativity">
+                        <div class="card-content">
+                            <h3>General Relativity</h3>
+                            <p>PH 516 at WPI. Einstein's theory of gravity and spacetime geometry.</p>
+                        </div>
+                    </a>
+                </div> -->
+            </section>
+
+            <div class="hidden-measurer" id="measurer"></div>
+
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>Created by Adam Field</p>
+            <div class="footer-socials">
+                <span class="contact-label">Contact me:</span>
+                <div class="social-icons">
+                    <a href="mailto:adfield@wpi.edu" title="Email">
+                        <img src="./assets/email_logo.svg" alt="email logo">
+                    </a>
+                    <a href="https://www.linkedin.com/in/adfield/" target="_blank" title="LinkedIn">
+                        <img src="./assets/linkedin_logo.png" alt="linkedin logo">
+                    </a>
+                    <a href="https://github.com/AdamField118" target="_blank" title="GitHub">
+                        <img src="./assets/github_logo.svg" alt="github logo">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./scripts/filter.js"></script>
+
+</body>
+</html>

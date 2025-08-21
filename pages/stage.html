@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Notes</title>
+    <link rel="stylesheet" href="../styles/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-java.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-c.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-latex.min.js"></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1 id="classTitle">Class Notes</h1>
+    </header>
+    
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="../index.html">Home</a>
+        <a href="./about.html">About</a>
+    </nav>
+
+    <div class="content-container">
+        <!-- <div class="controls">
+            <button class="sort-btn" id="backToHome">← Back to All Classes</button>
+        </div> -->
+
+        <!-- Loading indicator -->
+        <section class="loading" id="loadingIndicator">
+            <i class="fas fa-spinner fa-spin"></i> Loading class notes...
+        </section>
+
+        <!-- Course Introduction -->
+        <section id="courseIntro" style="display: none;">
+            <div class="course-intro-content">
+                <h2 id="courseTitle">Course Title</h2>
+                <p id="courseDescription">Course description will be loaded here...</p>
+            </div>
+        </section>
+
+        <!-- Dynamic Chapter Containers -->
+        <div id="chaptersContainer">
+            <!-- Chapters will be dynamically inserted here -->
+        </div>
+    </div>
+    
+    <div class="close-btn" id="closeBtn">
+        <i class="fas fa-times"></i>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>Created by Adam Field</p>
+            <div class="footer-socials">
+                <span class="contact-label">Contact me:</span>
+                <div class="social-icons">
+                    <a href="mailto:adfield@wpi.edu" title="Email">
+                        <img src="../assets/email_logo.svg" alt="email logo">
+                    </a>
+                    <a href="https://www.linkedin.com/in/adfield/" target="_blank" title="LinkedIn">
+                        <img src="../assets/linkedin_logo.png" alt="linkedin logo">
+                    </a>
+                    <a href="https://github.com/AdamField118" target="_blank" title="GitHub">
+                        <img src="../assets/github_logo.svg" alt="github logo">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="../scripts/notes.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+
+    <style>
+        .course-intro-content {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #00458b;
+        }
+
+        .course-intro-content h2 {
+            color: #00458b;
+            margin-bottom: 10px;
+        }
+
+        .chapter-section {
+            margin: 40px 0;
+        }
+
+        .chapter-header {
+            background-color: #f8f9fa;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border-left: 4px solid #00458b;
+        }
+
+        .chapter-header h3 {
+            color: #00458b;
+            margin: 0 0 10px 0;
+            font-size: 1.5rem;
+        }
+
+        .chapter-header p {
+            margin: 0;
+            color: #666;
+            font-style: italic;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .course-intro-content {
+                background-color: #242424;
+                border-left: 4px solid #7db3f0;
+            }
+
+            .course-intro-content h2 {
+                color: #7db3f0;
+            }
+
+            .chapter-header {
+                background-color: #2a2a2a;
+                border-left: 4px solid #7db3f0;
+            }
+
+            .chapter-header h3 {
+                color: #7db3f0;
+            }
+
+            .chapter-header p {
+                color: #a0a0a0;
+            }
+        }
+    </style>
+</body>
+</html>
