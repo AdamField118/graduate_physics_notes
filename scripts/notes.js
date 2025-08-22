@@ -132,22 +132,150 @@ function formatDate(dateString) {
     return date.toLocaleDateString(undefined, options);
 }
 
-// Simplified markdown rendering
+// UPDATED: Complete markdown rendering function from blog script
 function renderMarkdown(content) {
-    let html = content;
+    // Step 1: Extract and placeholder LaTeX blocks to protect them from processing
+    const latexBlocks = [];
     
-    // Basic markdown processing
+    // Handle $ blocks first (display/block math)
+    let html = content.replace(/\$\$([\s\S]*?)\$\$/g, (match, latex) => {
+        const processedLatex = latex.trim();
+        const latexHtml = `<div class="latex-display">$$${processedLatex}$$</div>`;
+        const placeholder = `__LATEXBLOCK_${latexBlocks.length}__`;
+        latexBlocks.push(latexHtml);
+        return placeholder;
+    });
+    
+    // Handle inline $ LaTeX (but avoid matching $ which we already processed)
+    html = html.replace(/(?<!\$)\$(?!\$)((?:[^$]|\\\$)+?)\$(?!\$)/g, (match, latex) => {
+        const processedLatex = latex.trim();
+        const latexHtml = `<span class="latex-inline">$${processedLatex}$</span>`;
+        const placeholder = `__LATEXBLOCK_${latexBlocks.length}__`;
+        latexBlocks.push(latexHtml);
+        return placeholder;
+    });
+
+    // Step 2: Extract and placeholder code blocks to protect them from processing
+    const codeBlocks = [];
+    html = html.replace(/```([\w-]*)\s*\n?([\s\S]*?)```/g, (match, lang, code) => {
+        // Remove only the very first newline if it exists
+        let processedCode = code;
+        if (processedCode.startsWith('\n')) {
+            processedCode = processedCode.substring(1);
+        }
+        
+        // Remove trailing whitespace but preserve internal formatting
+        processedCode = processedCode.replace(/\s+$/, '');
+        
+        // Convert tabs to 4 spaces for consistent rendering
+        processedCode = processedCode.replace(/\t/g, '    ');
+        
+        // Escape HTML entities but preserve whitespace and newlines exactly
+        const escapedCode = processedCode
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+            
+        const codeBlockHtml = lang 
+            ? `<pre><code class="language-${lang}">${escapedCode}</code></pre>`
+            : `<pre><code>${escapedCode}</code></pre>`;
+            
+        // Store the processed code block and return a placeholder
+        const placeholder = `__CODEBLOCK_${codeBlocks.length}__`;
+        codeBlocks.push(codeBlockHtml);
+        return placeholder;
+    });
+
+    // Step 3: Process the rest of the markdown (without code blocks and LaTeX)
     html = html
-        .replace(/### (.*$)/gim, '<h3>$1</h3>')
-        .replace(/## (.*$)/gim, '<h2>$1</h2>')
-        .replace(/# (.*$)/gim, '<h1>$1</h1>')
+        // Headers
+        .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+        .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+        .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        // Images (must be before links) - THIS WAS MISSING IN NOTES SCRIPT
+        .replace(/!\[([^\]]+)\]\(([^)]+)\)/gim, '<img src="$2" alt="$1">')
+        // Links
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2">$1</a>')
+        // Bold and italic
         .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
         .replace(/\*(.*?)\*/gim, '<em>$1</em>')
-        .replace(/`(.*?)`/gim, '<code>$1</code>')
-        .replace(/\n\n/g, '</p><p>')
-        .replace(/\n/g, '<br>');
+        // Inline code
+        .replace(/`(.*?)`/gim, (match, code) => {
+            return `<code>${code
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')}</code>`;
+        })
+        // Blockquotes
+        .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>');
+
+    // Step 4: Handle lists
+    // First, convert markdown unordered lists to ordered list items
+    html = html.replace(/^- (.*$)/gim, '<li>$1</li>');
     
-    return `<p>${html}</p>`.replace(/<p><\/p>/g, '');
+    // Also handle existing numbered lists
+    html = html.replace(/^\d+\. (.*$)/gim, '<li>$1</li>');
+    
+    // Split into lines and process list items
+    const lines = html.split('\n');
+    const processedLines = [];
+    let inList = false;
+    
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const isListItem = line.trim().match(/^<li>.*<\/li>$/);
+        
+        if (isListItem && !inList) {
+            // Starting a new list
+            processedLines.push('<ol>');
+            processedLines.push(line);
+            inList = true;
+        } else if (isListItem && inList) {
+            // Continue current list
+            processedLines.push(line);
+        } else if (!isListItem && inList) {
+            // End current list
+            processedLines.push('</ol>');
+            processedLines.push(line);
+            inList = false;
+        } else {
+            // Regular line
+            processedLines.push(line);
+        }
+    }
+    
+    // Close list if we ended while in a list
+    if (inList) {
+        processedLines.push('</ol>');
+    }
+    
+    html = processedLines.join('\n');
+
+    // Step 5: Process paragraphs and line breaks (but not inside code blocks or LaTeX)
+    html = html
+        .replace(/\n\n/g, '</p><p>')
+        .replace(/\n(?!<li>|<\/ol>)/g, '<br>')  // Don't add <br> before <li> or </ol>
+        .replace(/(<ol>)\n/g, '$1')             // Remove newline after <ol>
+        .replace(/(<\/li>)\n/g, '$1');          // Remove newline after </li>
+
+    // Step 6: Wrap in paragraphs and clean up
+    html = `<p>${html}</p>`
+        .replace(/<p><\/p>/g, '')
+        .replace(/<p>(<\/?(?:pre|h\d|blockquote|ol|div)[^>]*>)/g, '$1')
+        .replace(/(<\/?(?:pre|h\d|blockquote|ol|div)[^>]*>)<\/p>/g, '$1');
+
+    // Step 7: Restore the protected code blocks
+    codeBlocks.forEach((codeBlock, index) => {
+        html = html.replace(`__CODEBLOCK_${index}__`, codeBlock);
+    });
+
+    // Step 8: Restore the protected LaTeX blocks
+    latexBlocks.forEach((latexBlock, index) => {
+        html = html.replace(`__LATEXBLOCK_${index}__`, latexBlock);
+    });
+
+    return html;
 }
 
 // Parse front matter from markdown files
@@ -218,6 +346,7 @@ async function loadClassNotes(className) {
     // Start with just a small list of files to test
     const commonFiles = [
         'section-1-1.md',
+        'section-1-1_practice.md',
         'section-1-2.md',
         'section-2-1.md'
     ];

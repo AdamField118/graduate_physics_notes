@@ -15,7 +15,8 @@ $$i\bar{h}\frac{d}{dt}\psi(x,t)=H\psi(x,t)$$
 $$\psi(x,t)=f(t)u(x)=e^{-\frac{i}{\bar{h}}Et}u(t)$$
 Infite well is the first problem you learn about, how to solve a 1D schrodinger equation inside a infinite well. Also the finite well problem! Talk about later. Harmonic oscillator where the potential is 1/2kx^2. If you have a particle moving like this what is it's wave functions?  
 What other 1D potentials can we consider? Say a totally arbitrary 1D potential, how can I get the wave functions? You must use computers for that! Numerical solutions only no analytical solutions.  
-Suppose a potential like this (drawing in research notebook). But it is V_2 on the left and V_1 on the right.  
+Suppose a potential like this (drawing below). But it is V_2 on the left and V_1 on the right.  
+![finite potential well example](../../assets/quantum_mech/potential_well.jpg)
 The nature of the solutions can vary, take V_0 as the minimum of the potential. What can we say about this potential?
 | Energy  | Eigen Values | Eigen Functions |
 |---------|--------------|-----------------|  
@@ -32,7 +33,7 @@ Now suppose
 
 ## Bound state eigen function (ef)
 
-Drawing in notebook.
+![bound state](../../assets/quantum_mech/bound_state.jpg)
 
 The more precise way of expressing this is:
 $$\int_{-\inf}^{+\inf}|\psi(x)|^2dx < \inf \text{is finite}$$  
