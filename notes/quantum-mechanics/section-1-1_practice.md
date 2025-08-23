@@ -126,7 +126,7 @@ In the limit of a very deep well ($z_0 \gg 1$), there are many intersections, co
 ## 2.34
 ### Question 
 Consider the "step" potential: 
-$$\psi(x)=\begin{cases} 
+$$V(x)=\begin{cases} 
 0, & (x\leq 0). \\ 
 V_0, & (x > 0).
 \end{cases}$$
@@ -134,11 +134,55 @@ V_0, & (x > 0).
 (b) Calculate the reflection coefficient for the case $E>V_0$.
 (c) For a potential (such as this one) that does not go back to zero to the right of the barrier, the transimission coefficient is *not* simply $|F|^2/|A|^2$ (with $A$ with incident amplitude and $F$ the transmitted amplitude), because the transmitted wave travels at a different *speed*. Show that  
 $$T=\sqrt{\frac{E-V_0}{E}}\frac{|F|^2}{|A|^2},$$
-for $E>V_0$. *Hint*: You can figure it out using Equation 2.99, or--more elegantly, but less informatively--from the probability current (Problem 2.18). What is $T$, for $E<V_0$?
+for $E>V_0$. *Hint*: You can figure it out using Equation 2.99, or--more elegantly, but less informatively--from the probability current (Problem 2.18). What is $T$, for $E < V_0$?
 (d) For $E>V_0$, calculate the transmission coefficient for the step potential, and check that $T+R=1$.
 ### Solution
-$$R=\frac{1}{1+\frac{2\hbar^2E}{m\alpha^2}}, \quad T=\frac{1}{1+\frac{m\alpha^2}{2\hbar^2E}}$$
-TODO: Finsh up these questions
+Use the stationary scattering ansatz with incidence from the left:
+$$
+\psi(x)=
+\begin{cases}
+A e^{ikx}+B e^{-ikx}, & x<0,\\
+F e^{ik'x}, & x>0,
+\end{cases}
+\quad
+k=\frac{\sqrt{2mE}}{\hbar},\;\;
+k'=\frac{\sqrt{2m(E-V_0)}}{\hbar}.
+$$
+Continuity at $x=0$: $A+B=F$ and $ik(A-B)=ik'F$.
+Solve:
+$$
+\frac{B}{A}=\frac{k-k'}{k+k'},\qquad
+\frac{F}{A}=\frac{2k}{k+k'}.
+$$
+
+**(a) $E < V_0$.** Write $k'=i\kappa$ with $\kappa=\sqrt{2m(V_0-E)}/\hbar$. The “transmitted” term is evanescent $F e^{-\kappa x}$ $\Rightarrow$ no transmitted current. Hence
+$$
+T=0,\qquad R=\frac{|B|^2}{|A|^2}=1.
+$$
+(Physically: total reflection.)
+
+**(b) $E > V_0$.** The reflection coefficient is
+$$
+R=\frac{|B|^2}{|A|^2}=\left(\frac{k-k'}{k+k'}\right)^2.
+$$
+
+**(c) Velocity factor for $T$.** Probability current $j=\frac{\hbar k}{m}|\text{amp}|^2$ gives
+$$
+T=\frac{j_{\rm trans}}{j_{\rm inc}}=\frac{(\hbar k'/m)|F|^2}{(\hbar k/m)|A|^2}
+=\frac{k'}{k}\frac{|F|^2}{|A|^2}
+=\sqrt{\frac{E-V_0}{E}}\frac{|F|^2}{|A|^2}.
+$$
+For $E < V_0$, the transmitted current is zero $\Rightarrow T=0$.
+
+**(d) Explicit $T$ and check.** Using $\frac{F}{A}=\frac{2k}{k+k'}$,
+$$
+T=\frac{k'}{k}\left(\frac{2k}{k+k'}\right)^2=\frac{4kk'}{(k+k')^2}.
+$$
+Then
+$$
+R+T=\frac{(k-k')^2+4kk'}{(k+k')^2}=1.
+$$
+
 # Sakurai Questions
 
 ## 6.1
