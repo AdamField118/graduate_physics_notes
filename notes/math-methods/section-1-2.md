@@ -1,7 +1,7 @@
 ---
 title: "Power Series and Practice"
 date: "2025-01-15"
-section: "1.1"
+section: "1.2"
 tags: "Power Series"
 snippet: "Review of Calc 3 extended."
 ---
