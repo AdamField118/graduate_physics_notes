@@ -1,9 +1,9 @@
 ---
-title: "???"
+title: "Series, Sequences, Tests"
 date: "2025-01-15"
 section: "1.1"
-tags: "Fundamentals"
-snippet: "Review of ???."
+tags: "Series, Sequences, Convergence, Divergence"
+snippet: "Review of Calc 3."
 ---
 
 # Series, infinite series, and power series
